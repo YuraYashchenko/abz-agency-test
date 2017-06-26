@@ -12,9 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $employees = \App\Employee::all()->threaded();
+
+    return view('welcome', compact('employees'));
 });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
