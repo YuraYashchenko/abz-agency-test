@@ -2,6 +2,6 @@
 
 @section('content')
     <div class="container">
-        <Employees :employees="{{ $employees }}"></Employees>
+        <Employees :data="{{ $employees }}"></Employees>
     </div>
 @endsection

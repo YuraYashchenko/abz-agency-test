@@ -19,4 +19,7 @@ Route::get('/', function () {
 
 Route::resource('employee', 'EmployeesController');
 
+Route::post('/sort', 'SortController@sortBy');
+Route::post('/search', 'SearchController@searchByQuery');
+
 Auth::routes();
