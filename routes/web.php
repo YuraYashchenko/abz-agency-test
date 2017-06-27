@@ -17,4 +17,6 @@ Route::get('/', function () {
     return view('welcome', compact('employees'));
 });
 
+Route::resource('employee', 'EmployeesController');
+
 Auth::routes();

@@ -53,8 +53,8 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="{{ route('home') }}">
-                                            Home
+                                        <a href="{{ route('employee.index') }}">
+                                            Employees
                                         </a>
                                     </li>
                                     <li>
