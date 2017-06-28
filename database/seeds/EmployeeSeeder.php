@@ -32,7 +32,7 @@ class EmployeeSeeder extends Seeder
                     'boss_id' => function() use ($e) {
                         return $e->id;
                     },
-                    'position' => ' Level 3'
+                    'position' => 'Level 3'
                 ])->each(function($e) {
                     factory(App\Employee::class, 12)->create([
                         'boss_id' => function() use ($e) {

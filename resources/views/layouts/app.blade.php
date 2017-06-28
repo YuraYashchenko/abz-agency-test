@@ -53,6 +53,11 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
+                                        <a href="{{ route('employee.create') }}">
+                                            Create an employee
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a href="{{ route('employee.index') }}">
                                             Employees
                                         </a>
@@ -75,6 +80,8 @@
                 </div>
             </div>
         </nav>
+
+        @include('partials._errors')
 
         @yield('content')
     </div>

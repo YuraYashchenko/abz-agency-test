@@ -18,6 +18,7 @@
                     <td v-text="employee.position"></td>
                     <td v-text="employee.start_date"></td>
                     <td v-text="employee.salary"></td>
+                    <a :href="`/employee/${employee.id}/edit`" class="btn btn-success">Edit</a>
                 </tr>
             </tbody>
         </table>

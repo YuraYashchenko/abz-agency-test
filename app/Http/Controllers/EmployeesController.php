@@ -34,7 +34,9 @@ class EmployeesController extends Controller
      */
     public function create()
     {
-        //
+        $employees = Employee::all();
+
+        return view('employee.create', compact('employees'));
     }
 
     /**
@@ -45,41 +47,72 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|min:2|max:30',
+            'salary' => 'required|numeric',
+            'position' => 'required|min:2|max:30',
+            'start_date' => 'required|date',
+            'boss_id' => 'required|numeric'
+        ]);
+
+        Employee::create($request->all());
+
+        return back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param Employee $employee
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function show($id)
+    public function show(Employee $employee)
     {
-        //
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param Employee $employee
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function edit($id)
+    public function edit(Employee $employee)
     {
-        //
+        $employees = Employee::all();
+
+        return view('employee.edit', compact('employee', 'employees'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param Employee $employee
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Employee $employee)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|min:2|max:30',
+            'salary' => 'required|numeric',
+            'position' => 'required|min:2|max:30',
+            'start_date' => 'required|date',
+            'boss_id' => 'required|numeric|not_in:' . $employee->id
+        ]);
+
+        $employee->update([
+            'name' => $request->name,
+            'salary' => $request->salary,
+            'position' => $request->position,
+            'start_date' => $request->start_date,
+            'boss_id' => $request->boss_id
+        ]);
+
+        return redirect('/');
     }
 
     /**

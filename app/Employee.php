@@ -7,6 +7,8 @@ use Carbon\Carbon;
 
 class Employee extends Model
 {
+    protected $fillable = ['name', 'position', 'salary', 'start_date', 'boss_id'];
+
     public function newCollection(array $models = [])
     {
         return new EmployeeCollection($models);
@@ -22,6 +24,11 @@ class Employee extends Model
 
     public function getStartDateAttribute($data)
     {
-        return Carbon::createFromFormat('Y-m-d', $data)->format('j M Y');
+        return Carbon::createFromFormat('Y-m-d H:i:s', $data)->format('j M Y');
+    }
+
+    public function setStartDateAttribute($date)
+    {
+        $this->attributes['start_date'] = Carbon::parse($date);
     }
 }
