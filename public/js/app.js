@@ -41426,7 +41426,7 @@ exports = module.exports = __webpack_require__(38)(undefined);
 
 
 // module
-exports.push([module.i, "\nth:hover {\n    color: #007F80;\n    cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\nth:hover {\n    color: #007F80;\n    cursor: pointer;\n}\nimg {\n    height: 50px;\n    weight: 50px;\n}\n", ""]);
 
 // exports
 
@@ -41897,6 +41897,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['data'],
@@ -41989,7 +41990,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_vm._v("Salary")])]), _vm._v(" "), _c('tbody', _vm._l((_vm.employees), function(employee) {
-    return _c('tr', [_c('td', {
+    return _c('tr', [_c('td', [_c('img', {
+      staticClass: "img-circle",
+      attrs: {
+        "src": ("/storage/avatars/" + (employee.id) + "/avatarSmall.jpeg")
+      }
+    })]), _vm._v(" "), _c('td', {
       domProps: {
         "textContent": _vm._s(employee.name)
       }

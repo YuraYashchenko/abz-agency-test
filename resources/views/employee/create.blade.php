@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <form action="{{ route('employee.store') }}" method="POST">
+            <form action="{{ route('employee.store') }}" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
 
                 <div class="form-group">
@@ -23,7 +23,7 @@
 
                 <div class="form-group">
                     <label for="date">Date:</label>
-                    <input type="date" name="start_date" class="form-control">
+                    <input type="date" name="start_date" value="{{ date('Y-m-d') }}" class="form-control">
                 </div>
 
                 <div class="form-group">
@@ -33,6 +33,11 @@
                             <option value="{{ $e->id }}">{{ $e->name }}</option>
                         @endforeach
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="file">Choose Photo:</label>
+                    <input type="file" id="file" name="avatar">
                 </div>
 
                 <div class="form-group">

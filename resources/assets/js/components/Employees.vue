@@ -14,6 +14,7 @@
             </thead>
             <tbody>
                 <tr v-for="employee in employees">
+                    <td><img class="img-circle" :src="`/storage/avatars/${employee.id}/avatarSmall.jpeg`"></td>
                     <td v-text="employee.name"></td>
                     <td v-text="employee.position"></td>
                     <td v-text="employee.start_date"></td>
@@ -55,5 +56,10 @@
     th:hover {
         color: #007F80;
         cursor: pointer;
+    }
+
+    img {
+        height: 50px;
+        weight: 50px;
     }
 </style>

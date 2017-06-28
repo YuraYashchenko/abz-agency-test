@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use Illuminate\Http\Request;
+use Image;
+use Storage;
 
 class EmployeesController extends Controller
 {
@@ -52,12 +54,33 @@ class EmployeesController extends Controller
             'salary' => 'required|numeric',
             'position' => 'required|min:2|max:30',
             'start_date' => 'required|date',
-            'boss_id' => 'required|numeric'
+            'boss_id' => 'required|numeric',
+            'avatar' => 'sometimes|image'
         ]);
 
-        Employee::create($request->all());
+        $employee = Employee::create($request->all());
+        
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
 
-        return back();
+            $image = Image::make($file)
+                ->resize(400, 100, function($constraint) {
+                    $constraint->aspectRatio();
+                });
+
+            $imageSmall = Image::make($file)
+                ->resize(50, 50, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+
+            $image->stream();
+            $imageSmall->stream();
+
+            Storage::disk('local')->put("public/avatars/{$employee->id}/avatar.jpeg", $image);
+            Storage::disk('local')->put("public/avatars/{$employee->id}/avatarSmall.jpeg", $image);
+        }
+
+        return redirect()->route('employee.edit', $employee->id);
     }
 
     /**
