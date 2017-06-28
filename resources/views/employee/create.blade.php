@@ -29,6 +29,7 @@
                 <div class="form-group">
                     <label for="boss">Boss:</label>
                     <select name="boss_id" id="boss">
+                        <option value="0">Make a Boss</option>
                         @foreach($employees as $e)
                             <option value="{{ $e->id }}">{{ $e->name }}</option>
                         @endforeach
