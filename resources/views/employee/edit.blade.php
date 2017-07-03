@@ -4,11 +4,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <img class="img-circle" src="{{ Storage::url("avatars/{$employee->id}/avatar.jpeg") }}" alt="No Image">
+                <img class="img" src="{{ Storage::url("avatars/{$employee->id}/avatar.jpeg") }}" alt="No Image">
             </div>
 
             <div class="col-md-8">
-                <form action="{{ route('employee.update', $employee->id) }}" method="POST">
+                <form action="{{ route('employee.update', $employee->id) }}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}
 
@@ -29,7 +29,7 @@
 
                     <div class="form-group">
                         <label for="date">Date:</label>
-                        <input type="date" name="start_date" class="form-control" value="{{ date('Y-m-d', $employee->date) }}">
+                        <input type="date" name="start_date" class="form-control" value="{{ date('Y-m-d', strtotime($employee->start_date)) }}">
                     </div>
 
                     <div class="form-group">
@@ -42,8 +42,12 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="file">Choose Photo:</label>
+                        <input type="file" id="file" name="avatar">
+                    </div>
+
+                    <div class="form-group">
                         <button type="submit" class="btn btn-success">Save</button>
-                        <a href="#" class="btn btn-danger">Delete</a>
                     </div>
                 </form>
             </div>

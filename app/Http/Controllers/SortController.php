@@ -20,6 +20,6 @@ class SortController extends Controller
         if (in_array($field, ['name', 'start_date', 'position', 'salary'])) {
             return Employee::orderBy($field)->get();
         }
-            return response('Error field.', 421);
+            return response('Error field.', 422);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\ImageUpload;
 use Illuminate\Http\Request;
 use Image;
 use Storage;
@@ -60,27 +61,9 @@ class EmployeesController extends Controller
 
         $employee = Employee::create($request->all());
         
-        if ($request->hasFile('avatar')) {
-            $file = $request->file('avatar');
+        (new ImageUpload($request, $employee))->upload(400, 100);
 
-            $image = Image::make($file)
-                ->resize(400, 100, function($constraint) {
-                    $constraint->aspectRatio();
-                });
-
-            $imageSmall = Image::make($file)
-                ->resize(50, 50, function ($constraint) {
-                    $constraint->aspectRatio();
-                });
-
-            $image->stream();
-            $imageSmall->stream();
-
-            Storage::disk('local')->put("public/avatars/{$employee->id}/avatar.jpeg", $image);
-            Storage::disk('local')->put("public/avatars/{$employee->id}/avatarSmall.jpeg", $image);
-        }
-
-        return redirect()->route('employee.edit', $employee->id);
+        return redirect()->route('employee.show', $employee->id);
     }
 
     /**
@@ -88,11 +71,11 @@ class EmployeesController extends Controller
      *
      * @param Employee $employee
      * @return \Illuminate\Http\Response
-     * @internal param int $id
      */
     public function show(Employee $employee)
     {
-
+        $employee->load('boss');
+        return view('employee.show', compact('employee'));
     }
 
     /**
@@ -100,7 +83,6 @@ class EmployeesController extends Controller
      *
      * @param Employee $employee
      * @return \Illuminate\Http\Response
-     * @internal param int $id
      */
     public function edit(Employee $employee)
     {
@@ -127,25 +109,31 @@ class EmployeesController extends Controller
             'boss_id' => 'required|numeric|not_in:' . $employee->id
         ]);
 
-        $employee->update([
-            'name' => $request->name,
-            'salary' => $request->salary,
-            'position' => $request->position,
-            'start_date' => $request->start_date,
-            'boss_id' => $request->boss_id
-        ]);
+        $employee->update($request->all());
 
-        return redirect('/');
+        if (Storage::disk('local')->exists("public/avatars/{$employee->id}/avatar.jpeg"))
+        {
+            Storage::delete("public/avatars/{$employee->id}/avatar.jpeg");
+        }
+        (new ImageUpload($request, $employee))->upload(400, 100);
+
+        return redirect()->route('employee.show', $employee->id );
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Employee $employee
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Employee $employee)
     {
-        //
+        $subordinates = $employee->subordinates;
+
+        $subordinates->each->update([
+            'boss_id' => $employee->boss->id
+        ]);
+
+        $employee->delete();
     }
 }

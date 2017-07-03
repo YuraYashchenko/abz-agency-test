@@ -28,6 +28,6 @@ $factory->define(App\Employee::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'salary' => rand(1000, 10000),
-        'start_date' => $faker->date()
+        'start_date' => $faker->date
     ];
 });

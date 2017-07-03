@@ -7,6 +7,7 @@
 
         <table class="table">
             <thead>
+                <th></th>
                 <th @click="sort('name')">Name</th>
                 <th @click="sort('position')">Position</th>
                 <th @click="sort('start_date')">Start Date</th>
@@ -14,12 +15,12 @@
             </thead>
             <tbody>
                 <tr v-for="employee in employees">
-                    <td><img class="img-circle" :src="`/storage/avatars/${employee.id}/avatarSmall.jpeg`"></td>
+                    <td><img class="img" :src="`/storage/avatars/${employee.id}/avatar.jpeg`"></td>
                     <td v-text="employee.name"></td>
                     <td v-text="employee.position"></td>
                     <td v-text="employee.start_date"></td>
                     <td v-text="employee.salary"></td>
-                    <a :href="`/employee/${employee.id}/edit`" class="btn btn-success">Edit</a>
+                    <a :href="`/employee/${employee.id}`" class="btn btn-success">View</a>
                 </tr>
             </tbody>
         </table>
@@ -60,6 +61,9 @@
 
     img {
         height: 50px;
-        weight: 50px;
+        width: 75px;
+    }
+    th,td {
+        text-align: center;
     }
 </style>

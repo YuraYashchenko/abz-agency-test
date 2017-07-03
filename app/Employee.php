@@ -16,6 +16,8 @@ class Employee extends Model
 
     public function scopeSearch($query, $q)
     {
+        $q = '%' . $q . '%';
+
         $query->where('name', 'like', $q)
             ->orWhere('position', 'like', $q)
             ->orWhere('start_date', 'like', $q)
@@ -30,5 +32,15 @@ class Employee extends Model
     public function setStartDateAttribute($date)
     {
         $this->attributes['start_date'] = Carbon::parse($date);
+    }
+
+    public function boss()
+    {
+        return $this->belongsTo(Employee::class, 'boss_id');
+    }
+
+    public function subordinates()
+    {
+        return $this->hasMany(Employee::class, 'boss_id');
     }
 }

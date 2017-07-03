@@ -13,9 +13,9 @@ class SearchController extends Controller
             'query' => 'required'
         ]);
 
-        $q = '%' . $request->input('query') . '%';
-
-        $employees = Employee::search($q)->get();
+        $employees = Employee::search(
+            $request->input('query')
+        )->get();
 
         return $employees;
     }

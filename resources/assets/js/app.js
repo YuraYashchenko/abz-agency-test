@@ -18,5 +18,14 @@ window.Vue = require('vue');
 Vue.component('Employees', require('./components/Employees.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+
+    methods: {
+        destroy(id) {
+            axios.delete('/employee/' + id)
+                .then(() => {
+                    window.location.href = '/employee';
+                })
+        }
+    }
 });

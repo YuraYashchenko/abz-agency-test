@@ -793,7 +793,16 @@ window.Vue = __webpack_require__(34);
 Vue.component('Employees', __webpack_require__(35));
 
 var app = new Vue({
-  el: '#app'
+    el: '#app',
+
+    methods: {
+        destroy: function destroy(id) {
+            axios.delete('/employee/' + id).then(function (response) {
+                console.log(response.data);
+                window.location.href = '/employee';
+            });
+        }
+    }
 });
 
 /***/ }),
@@ -41426,7 +41435,7 @@ exports = module.exports = __webpack_require__(38)(undefined);
 
 
 // module
-exports.push([module.i, "\nth:hover {\n    color: #007F80;\n    cursor: pointer;\n}\nimg {\n    height: 50px;\n    weight: 50px;\n}\n", ""]);
+exports.push([module.i, "\nth:hover {\n    color: #007F80;\n    cursor: pointer;\n}\nimg {\n    height: 50px;\n    width: 75px;\n}\nth,td {\n    text-align: center;\n}\n", ""]);
 
 // exports
 
@@ -41898,6 +41907,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['data'],
@@ -41965,7 +41975,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Search")])]), _vm._v(" "), _c('table', {
     staticClass: "table"
-  }, [_c('thead', [_c('th', {
+  }, [_c('thead', [_c('th'), _vm._v(" "), _c('th', {
     on: {
       "click": function($event) {
         _vm.sort('name')
@@ -41991,9 +42001,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Salary")])]), _vm._v(" "), _c('tbody', _vm._l((_vm.employees), function(employee) {
     return _c('tr', [_c('td', [_c('img', {
-      staticClass: "img-circle",
+      staticClass: "img",
       attrs: {
-        "src": ("/storage/avatars/" + (employee.id) + "/avatarSmall.jpeg")
+        "src": ("/storage/avatars/" + (employee.id) + "/avatar.jpeg")
       }
     })]), _vm._v(" "), _c('td', {
       domProps: {
@@ -42014,9 +42024,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }), _vm._v(" "), _c('a', {
       staticClass: "btn btn-success",
       attrs: {
-        "href": ("/employee/" + (employee.id) + "/edit")
+        "href": ("/employee/" + (employee.id))
       }
-    }, [_vm._v("Edit")])])
+    }, [_vm._v("View")])])
   }))])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
